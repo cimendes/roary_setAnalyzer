@@ -80,10 +80,7 @@ def print_report(genes, set, filename):
 		gene_annotation=gene_annotation[0].strip()
 		if key not in toPrint:
 			toPrint[key, gene_annotation]=len(value)
-		'''else:
-			c.update(key)
-			key=key+'_'+str(c[key])
-			toPrint[key]=[gene_annotation,len(value)]'''
+
 	toPrint_sorted=sorted(toPrint.items(), key=operator.itemgetter(1), reverse=True) #tuple
 
 	report=file(filename+'.txt','w')
@@ -103,8 +100,6 @@ def print_report(genes, set, filename):
 	report.close()
 
 def make_wordCloud(genes, uniqueID, filename):
-	import matplotlib.pyplot as plt
-	from wordcloud import WordCloud
 
 	text=""
 	for key,value in uniqueID.iteritems():
@@ -129,8 +124,7 @@ def make_wordCloud(genes, uniqueID, filename):
 	plt.axis("off")
 	plt.title(filename)
 	plt.show() 
-	#or sve as png
-	#img.write_png(filename+".png") #TODO grava ao contrario!
+
 
 def getFileWordCloudExpression(genes, uniqueID,filename):
 	expressions={}
@@ -150,41 +144,8 @@ def getFileWordCloudExpression(genes, uniqueID,filename):
 	for key,value in expressions.iteritems():
 		fh.write(str(key)+':'+str(value)+'\n')
 	fh.close()
-'''
-def getClustergram(gene_presence_absence_file):
-	from clustergram import clustergram as ClusterGram
-	from heatmapcluster import heatmapcluster
-	print 'lala'
-	df=pd.read_csv(gene_presence_absence_file, header=0, index_col=0, sep='\t' )
-	#print len(df)
-	#print list(df)
-	header_col=list(df)
-	#print len(header_col)
-	header_line = df.index.values
-	#print header_line
-	header_line=header_line.tolist()
-	m_data = df.as_matrix()
-	#lala=open('matrix.csv','w')
-	#lala.write(m_data)
-	#lala.close()
-	#print m_data[-1,:]
-	#h=heatmapcluster(m_data, header_line, header_col)
-	#print len(m_data)
-	#cg=ClusterGram(data=m_data, row_labels=header_line, col_labels=header_col, figname='clustergram.png')
-	#plt.show()
 
-	h = heatmapcluster(m_data, header_line, header_col,
-                   num_row_clusters=3, num_col_clusters=0,
-                   label_fontsize=6,
-                   xlabel_rotation=-75,
-                   cmap=plt.cm.coolwarm,
-                   show_colorbar=True,
-                   top_dendrogram=True)
-	plt.show()
-'''
 def runProgram(args):
-
-	#print args
 
 	genes=parse_gene_presence_absence(args.gpa)
 	unique_set_one=parse_set(args.uso)
